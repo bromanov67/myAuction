@@ -10,9 +10,10 @@ namespace auction
         public int Id { get; init; }
         public int AuctionId { get; init; }
         public int Name { get; init; }
-        public string COde { get; init; } 
+        public string Code { get; init; }
         public string Description { get; init; }
         public LotStatus Status { get; init; }
+        public IReadOnlyCollection<Bet> Bets => _bets;
 
         private List<Bet> _bets = new List<Bet>();
 
@@ -29,7 +30,7 @@ namespace auction
         /// <returns> Результат выполнения операции</returns>
         public Result TryDoBet(Bet bet)
         {
-            if (Status != LotStatus.Bidding)
+            if (Status == LotStatus.Complete)
             {
                 return Result.Fail("Невозожно сделать ставку, торги завершены");
             }
